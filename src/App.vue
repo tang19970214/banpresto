@@ -4,7 +4,7 @@
     <router-view class="mt-85"></router-view>
     <Footer />
     <div class="lineLink pos-fixed mr-10 mb-10">
-      <a href="http://line.me/ti/g/R3Rrwe8sqb">
+      <a href="http://line.me/ti/g/R3Rrwe8sqb" target="_blank">
         <img src="@/assets/images/line.png" alt="" width="50px" />
       </a>
     </div>
