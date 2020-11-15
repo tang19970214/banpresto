@@ -3,7 +3,7 @@
     <div class="w-100">
       <div class="p-20">
         <div
-          class="w-100 d-flex align-items-center justify-content-center flex-column"
+          class="w-100 d-flex align-items-center justify-content-center flex-column font-s-14"
         >
           <div class="w-100 d-flex flex-column">
             <p class="m-0">注意事項：</p>

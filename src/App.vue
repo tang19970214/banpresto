@@ -1,11 +1,12 @@
 <template>
   <div id="app">
+    <el-backtop></el-backtop>
     <Header />
     <router-view class="mt-85"></router-view>
     <Footer />
-    <div class="lineLink pos-fixed mr-10 mb-10">
+    <div class="lineLink pos-fixed mr-20 mb-150">
       <a href="http://line.me/ti/g/R3Rrwe8sqb" target="_blank">
-        <img src="@/assets/images/line.png" alt="" width="50px" />
+        <img src="@/assets/images/line.png" alt="" width="70px" />
       </a>
     </div>
   </div>
@@ -24,8 +25,8 @@ export default {
 </script>
 
 <style lang="scss">
-  .lineLink {
-    bottom: 0;
-    right: 0;
-  }
+.lineLink {
+  bottom: 0;
+  right: 0;
+}
 </style>
