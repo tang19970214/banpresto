@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0a2e0d"],{"0090":function(n,e,t){"use strict";t.r(e);var u=function(){var n=this,e=n.$createElement,t=n._self._c||e;return t("div",[t("TurnTable")],1)},a=[],l=t("2490"),c={components:{TurnTable:l["a"]}},r=c,o=t("2877"),s=Object(o["a"])(r,u,a,!1,null,null,null);e["default"]=s.exports}}]);
+//# sourceMappingURL=chunk-2d0a2e0d.9d3112a5.js.map

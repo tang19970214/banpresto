@@ -34,6 +34,23 @@
               <div class="w-100 mt-20">
                 <p class="m-0">（實際已店家張貼之價格為主）</p>
               </div>
+              <div
+                class="w-100 mt-30 d-flex align-items-end justify-content-center"
+                v-if="item.value == 'ghost_train'"
+              >
+                <img
+                  src="@/assets/images/medal.png"
+                  alt=""
+                  width="80px"
+                  @click="specialAward = true"
+                />
+                <img
+                  class="pos-absolute ml-60 mt-10"
+                  src="@/assets/images/click.png"
+                  alt=""
+                  width="40px"
+                />
+              </div>
             </div>
           </div>
           <div class="w-100 mt-20">
@@ -72,6 +89,18 @@
         </div>
       </div>
     </div>
+
+    <el-dialog title="特別活動" :visible.sync="specialAward" width="90%">
+      <!-- 鐵支獎加送公仔 -->
+      <span class="font-s-14">
+        即日起，只要五抽皆同獎項（例：5抽皆H），即贈
+        <strong class="font-s-22"> 『2D 索隆』 </strong>
+      </span>
+      <img class="mt-30" src="@/assets/images/zoro.jpg" alt="ZORO" width="100%" />
+      <span slot="footer" class="dialog-footer">
+        <el-button class="w-100" type="primary" @click="specialAward = false" plain>確認</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -86,8 +115,8 @@ export default {
             "https://bpnavi.jp/s/fc/bnp_media/image/3377/JOTVvldWsEhb8D.jpg",
           titleName: "一番くじ 星のカービィ Starlight Theater",
           leftTickets: "32張",
-          price_one: "NT$300",
-          price_five: "NT$1300",
+          price_one: "NT$320",
+          price_five: "NT$1500",
           videoPath: "https://www.youtube.com/embed/56q71a4ntmU",
           menuPath:
             "https://sn.bpnavi.jp/page/kirby/kirby13/0925/kk10m_ST_banner_1002x9490 _0925-01_zK5JX3wu.jpg",
@@ -98,8 +127,8 @@ export default {
             "https://sn.bpnavi.jp/1kuji_kimetsu/kimetsu3/images/main.jpg",
           titleName: "一番くじ 鬼滅の刃 ～参～",
           leftTickets: "42張",
-          price_one: "NT$300",
-          price_five: "NT$1300",
+          price_one: "NT$320",
+          price_five: "NT$1500",
           videoPath: "https://www.youtube.com/embed/ykRZwEsKdyk",
           menuPath:
             "https://sn.bpnavi.jp/1kuji_kimetsu/kimetsu3/images/cp01.jpg?v2",
@@ -111,8 +140,8 @@ export default {
           titleName:
             "一番くじ 劇場版「美少女戦士セーラームーンEternal」Let's party!",
           leftTickets: "54張",
-          price_one: "NT$300",
-          price_five: "NT$1300",
+          price_one: "NT$320",
+          price_five: "NT$1500",
           videoPath: "",
           menuPath:
             "https://sn.bpnavi.jp/page/sailormoon/sailormoon9/0807/9sm_web_0803-01.jpg",
@@ -124,8 +153,8 @@ export default {
           titleName:
             "一番くじ Re:ゼロから始める異世界生活－物語は、To be continued－",
           leftTickets: "50張",
-          price_one: "NT$300",
-          price_five: "NT$1300",
+          price_one: "NT$420",
+          price_five: "NT$2000",
           videoPath: "https://www.youtube.com/embed/DgJWKII-D2k",
           menuPath:
             "https://sn.bpnavi.jp/page/re-zero/re-zero8/2020_10m_RZR_web_0930_3.jpg",
@@ -136,8 +165,8 @@ export default {
             "https://sn.bpnavi.jp/1kuji_kimetsu/kimetsu4/images/main.jpg",
           titleName: "一番くじ 鬼滅の刃 ～無限列車編～",
           leftTickets: "65張",
-          price_one: "NT$300",
-          price_five: "NT$1300",
+          price_one: "NT$480",
+          price_five: "NT$2300",
           videoPath: "https://www.youtube.com/embed/NJT6NpKL9S4",
           menuPath: "",
           reward: [
@@ -214,6 +243,7 @@ export default {
           ],
         },
       ],
+      specialAward: false,
     };
   },
   computed: {
