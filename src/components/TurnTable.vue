@@ -2,16 +2,24 @@
   <div id="turnTable">
     <div class="container">
       <div class="w-100 h-100">
-        <div class="p-10 text-center">
+        <div
+          class="px-20 py-10 d-flex align-items-center justify-content-between"
+        >
           <strong>售價： 300元/次</strong>
+          <img
+            src="@/assets/images/gift-box.png"
+            alt="今日禮品"
+            @click="todayAward = true"
+            width="30px"
+          />
         </div>
         <div class="px-5 d-flex" v-if="!correctUser">
           <el-input
-            placeholder="請輸入代碼"
+            placeholder="請輸入代碼以開啟輪盤"
             v-model="checkValue"
             @keyup.enter.native="checkUser(checkValue)"
           ></el-input>
-          <el-button type="primary" @click="checkUser(checkValue)" plain
+          <el-button type="danger" @click="checkUser(checkValue)" plain
             >認證</el-button
           >
         </div>
@@ -67,19 +75,20 @@
         width="90%"
       >
         <div>
-          <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+          <el-tabs v-model="activeName" type="card">
             <el-tab-pane label="區塊設定" name="first">
               <div
                 class="w-100 d-flex align-items-center justify-content-start flex-column"
               >
                 <div class="w-100">
                   <div class="editBySet w-100">
-                    <table>
+                    <table class="w-100">
                       <thead class="text-center">
                         <tr>
-                          <th scope="col" width="20%">機率</th>
-                          <th scope="col" width="50%">獎品</th>
-                          <th scope="col" width="30%">功能</th>
+                          <th scope="col" width="15%">移除</th>
+                          <th scope="col" width="25%">機率(%)</th>
+                          <th scope="col" width="45%">獎品</th>
+                          <th scope="col" width="15%">修改</th>
                         </tr>
                       </thead>
                       <draggable
@@ -87,8 +96,22 @@
                         :list="gifts"
                         :element="'tbody'"
                       >
-                        <tr v-for="(gift, index) in gifts" :key="'GF_' + index" style="border-bottom: 0.5px solid #EEE">
-                          <td class="justify-content-center">
+                        <tr
+                          v-for="(gift, index) in gifts"
+                          :key="'GF_' + index"
+                          style="border-bottom: 0.5px solid #eee"
+                        >
+                          <td>
+                            <div class="text-center">
+                              <img
+                                src="@/assets/images/trash.png"
+                                alt="刪除"
+                                @click.prevent="checkRemove(index)"
+                                width="30px"
+                              />
+                            </div>
+                          </td>
+                          <td class="text-center">
                             <span v-show="!gift.edit">{{
                               getChance(gift.chance)
                             }}</span>
@@ -101,7 +124,7 @@
                             ></el-input>
                           </td>
                           <td>
-                            <div>
+                            <div class="text-center">
                               <span v-show="!gift.edit">{{ gift.text }}</span>
                               <el-input
                                 type="text"
@@ -111,8 +134,24 @@
                             </div>
                           </td>
                           <td>
-                            <div class="text-center d-flex flex-column">
-                              <el-button
+                            <div
+                              class="w-100 d-flex align-items-center justify-content-center"
+                            >
+                              <img
+                                src="@/assets/images/edit.png"
+                                alt="修改"
+                                @click.prevent="editGiftData(index)"
+                                v-if="!startEdit"
+                                width="30px"
+                              />
+                              <img
+                                src="@/assets/images/save.png"
+                                alt="儲存"
+                                @click.prevent="saveGiftData(index)"
+                                v-else
+                                width="30px"
+                              />
+                              <!-- <el-button
                                 type="primary"
                                 v-show="!gift.edit"
                                 @click.prevent="editGiftData(index)"
@@ -132,20 +171,24 @@
                                 @click.prevent="saveGiftData(index)"
                                 plain
                                 >儲存</el-button
-                              >
-                              <el-button
+                              > -->
+                              <!-- <el-button
                                 type="primary"
                                 v-show="!gift.edit"
                                 @click.prevent="cancleGiftData(index)"
                                 plain
                                 >取消</el-button
-                              >
+                              > -->
                             </div>
                           </td>
                         </tr>
                       </draggable>
                     </table>
-                    <el-button type="success" @click="addGiftData" plain
+                    <el-button
+                      class="mt-10"
+                      type="success"
+                      @click="addGiftData"
+                      plain
                       >新增獎項</el-button
                     >
                   </div>
@@ -157,7 +200,7 @@
               <div
                 class="w-100 d-flex align-items-center justify-content-start flex-column"
               >
-                <div class="w-100 d-flex flex-row">
+                <!-- <div class="w-100 d-flex flex-row">
                   <el-form ref="form">
                     <el-form-item label="停止模式：">
                       <el-radio-group v-model="config.autoStop">
@@ -166,32 +209,24 @@
                       </el-radio-group>
                     </el-form-item>
                   </el-form>
-                  <el-form class="ml-100" ref="form">
-                    <el-form-item label="轉出資訊：">
-                      <el-radio-group v-model="config.showAlert">
-                        <el-radio label="顯示" checked></el-radio>
-                        <el-radio label="關閉"></el-radio>
-                      </el-radio-group>
-                    </el-form-item>
-                  </el-form>
-                </div>
+                </div> -->
 
                 <div class="w-100">
-                  <div class="w-100 d-flex column">
+                  <div class="w-100 d-flex flex-column">
                     <label>{{
                       config.autoStop
-                        ? "動畫時間長度(s)："
-                        : "轉10圈的轉速(s)："
+                        ? "動畫時間長度(秒)："
+                        : "轉10圈的轉速(秒)："
                     }}</label>
                     <el-input
                       type="number"
                       min="1"
                       step="1"
-                      max="5"
+                      max="10"
                       v-model.number="config.runTime"
                     ></el-input>
                   </div>
-                  <div class="w-100 d-flex column">
+                  <!-- <div class="w-100 d-flex flex-column">
                     <label>轉盤尺寸設定(px)：</label>
                     <el-input
                       type="number"
@@ -199,8 +234,8 @@
                       step="1"
                       v-model.number="config.baseSize"
                     ></el-input>
-                  </div>
-                  <div class="w-100 d-flex column">
+                  </div> -->
+                  <!-- <div class="w-100 d-flex flex-column">
                     <label>最大回彈角度(%)：</label>
                     <el-input
                       type="number"
@@ -210,8 +245,8 @@
                       v-model.number="config.rollBackRange"
                       :readonly="!config.autoStop"
                     ></el-input>
-                  </div>
-                  <div class="w-100 d-flex column">
+                  </div> -->
+                  <!-- <div class="w-100 d-flex flex-column">
                     <label>區塊預設色(單數)：</label>
                     <el-input
                       type="color"
@@ -222,8 +257,8 @@
                       type="text"
                       v-model="config.singleColor"
                     ></el-input>
-                  </div>
-                  <div class="w-100 d-flex column">
+                  </div> -->
+                  <!-- <div class="w-100 d-flex flex-column">
                     <label>區塊預設色(雙數)：</label>
                     <el-input
                       type="color"
@@ -234,8 +269,8 @@
                       type="text"
                       v-model="config.doubleColor"
                     ></el-input>
-                  </div>
-                  <div class="w-100 d-flex column">
+                  </div> -->
+                  <!-- <div class="w-100 d-flex flex-column">
                     <label>區塊邊框寬度：</label>
                     <el-input
                       type="number"
@@ -243,8 +278,8 @@
                       step="1"
                       v-model.number="config.borderWidth"
                     ></el-input>
-                  </div>
-                  <div class="w-100 d-flex column">
+                  </div> -->
+                  <!-- <div class="w-100 d-flex flex-column">
                     <label>按鈕顏色：</label>
                     <el-input
                       type="color"
@@ -255,8 +290,8 @@
                       type="text"
                       v-model="config.buttonColor"
                     ></el-input>
-                  </div>
-                  <div class="w-100 d-flex column">
+                  </div> -->
+                  <div class="w-100 d-flex flex-column">
                     <label>按鈕文字：</label>
                     <el-input
                       type="text"
@@ -269,41 +304,53 @@
           </el-tabs>
         </div>
         <span slot="footer" class="dialog-footer">
-          <form class="form-inline" @submit.prevent="">
-            <label for="">設定檔名稱</label>
-            <el-input type="text" v-model="dataName"></el-input>
-          </form>
-          <el-button type="primary" @click.prevent="newData" plain
-            >新增</el-button
-          >
-          <el-button type="success" @click.prevent="saveData()" plain
-            >儲存</el-button
-          >
+          <el-divider class="mt-0"></el-divider>
           <el-button
             type="danger"
-            @click.prevent="deleteData(dataNo)"
-            v-if="dataNo !== 0"
+            @click.prevent="opendataSetting = false"
             plain
-            >刪除</el-button
-          >
-          <el-button type="info" @click.prevent="setDefaultDatas()" plain
-            >預設</el-button
-          >
-          <el-button type="info" @click.prevent="opendataSetting = false" plain
             >關閉視窗</el-button
           >
         </span>
       </el-dialog>
-
       <el-dialog title="恭喜中獎" :visible.sync="getAward" width="90%">
         <span>{{ currentResult }}</span>
         <span slot="footer" class="dialog-footer">
           <el-button
             class="w-100"
-            type="primary"
+            type="success"
             @click="getAward = false"
             plain
             >確定</el-button
+          >
+        </span>
+      </el-dialog>
+      <el-dialog :visible.sync="todayAward" width="90%">
+        <div class="w-100 text-center">
+          <strong class="font-s-24">獎項總覽：</strong>
+          <ul class="p-0 list-none">
+            <li class="py-5 font-s-16" v-for="(item, index) in gifts" :key="'GF_' + index">
+              {{ item.text }}
+            </li>
+          </ul>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button
+            class="w-100"
+            type="success"
+            @click="todayAward = false"
+            plain
+            >確定</el-button
+          >
+        </span>
+      </el-dialog>
+
+      <el-dialog title="提示" :visible.sync="removeAlert" width="70%">
+        <span>確定要刪除嗎？</span>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="removeAlert = false">取 消</el-button>
+          <el-button type="primary" @click="removeGiftData(removeID)"
+            >确 定</el-button
           >
         </span>
       </el-dialog>
@@ -321,9 +368,13 @@ export default {
   data() {
     return {
       activeName: "first",
-      checkValue: "07190827",
-      setUser: window.localStorage.getItem("user"),
+      checkValue: "",
+      setUser: window.sessionStorage.getItem("user"),
+      removeAlert: false,
+      removeID: "",
+      startEdit: false,
       correctUser: false,
+      todayAward: false,
       /** 轉動狀態 */
       isRunning: false,
       /** 手機瀏覽器，用來開關input-color */
@@ -340,8 +391,6 @@ export default {
       giftDegs: [],
       /** 中獎清單 */
       currentResult: "",
-      // openresultList: false,
-      // resultList: [],
       /** 設定紀錄 */
       opendataSetting: false,
       dataList: [],
@@ -408,7 +457,6 @@ export default {
           edit: false,
         },
       ],
-
       currentResult: "",
       /** 轉盤設定 */
       config: {},
@@ -487,11 +535,8 @@ export default {
     },
   },
   methods: {
-    handleClick(tab, event) {
-      console.log(tab, event);
-    },
     checkUser(data) {
-      window.localStorage.setItem("user", data);
+      window.sessionStorage.setItem("user", data);
       this.setUser = data;
       if (this.setUser == "07190827") {
         this.$message({
@@ -565,11 +610,13 @@ export default {
       const gift = this.gifts[index];
       gift.clone = Object.assign({}, gift);
       gift.edit = true;
+      this.startEdit = true;
     },
     saveGiftData(index) {
       const gift = this.gifts[index];
       delete gift.clone;
       gift.edit = false;
+      this.startEdit = false;
     },
     cancleGiftData(index) {
       let gift = this.gifts[index];
@@ -578,8 +625,17 @@ export default {
       gift.edit = false;
     },
     /** 移除獎品資料 */
+    checkRemove(index) {
+      this.removeAlert = true;
+      this.removeID = index;
+    },
     removeGiftData(index) {
+      this.$message({
+        message: "刪除成功！",
+        type: "success",
+      });
       this.gifts.splice(index, 1);
+      this.removeAlert = false;
     },
     //------------------------------------
     // --獎品編輯 Methods
@@ -809,12 +865,11 @@ export default {
     document.addEventListener("keypress", (e) => {
       if (e.keyCode === 32) this.animitionProc();
     });
-    if (window.localStorage.getItem("user") == "07190827") {
+    if (window.sessionStorage.getItem("user") == "07190827") {
       this.correctUser = true;
     } else {
       this.correctUser = false;
     }
-    console.log(this.correctUser);
   },
 };
 </script>

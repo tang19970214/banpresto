@@ -91,14 +91,40 @@
     </div>
 
     <el-dialog title="特別活動" :visible.sync="specialAward" width="90%">
-      <!-- 鐵支獎加送公仔 -->
-      <span class="font-s-14">
-        即日起，只要五抽皆同獎項（例：5抽皆H），即贈
-        <strong class="font-s-22"> 『2D 索隆』 </strong>
-      </span>
-      <img class="mt-30" src="@/assets/images/zoro.jpg" alt="ZORO" width="100%" />
+      <div class="w-100">
+        <ul class="m-0 p-0 list-none">
+          <li>即日起，購買五抽之顧客即享有額外活動『鐵獎』</li>
+          <li>四鐵獎（例：GGGGH），即贈【A賞 自在極意功悟空】</li>
+          <li>四鐵獎（例：GGGGG），即贈【2D 索隆】</li>
+        </ul>
+        <div class="w-100 mt-30 d-flex flex-column text-center">
+          <strong class="mb-10 font-s-18">－四鐵獎－</strong>
+          <strong class="mb-10 font-s-16">【A賞 自在極意功悟空】</strong>
+          <img
+            src="@/assets/images/goku.jpg"
+            alt="A賞 自在極意功悟空"
+            width="100%"
+          />
+        </div>
+        <div class="w-100 mt-30 d-flex flex-column text-center">
+          <strong class="mb-10 font-s-18">－五鐵獎－</strong>
+          <strong class="mb-10 font-s-16">【2D 索隆】</strong>
+          <img
+            src="@/assets/images/zoro.jpg"
+            alt="2D 索隆"
+            width="100%"
+          />
+        </div>
+      </div>
+      <el-divider class="mt-30 mb-0"></el-divider>
       <span slot="footer" class="dialog-footer">
-        <el-button class="w-100" type="primary" @click="specialAward = false" plain>確認</el-button>
+        <el-button
+          class="w-100"
+          type="success"
+          @click="specialAward = false"
+          plain
+          >確認</el-button
+        >
       </span>
     </el-dialog>
   </div>
