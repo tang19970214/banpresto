@@ -3,11 +3,13 @@
     <el-backtop></el-backtop>
     <Header />
     <router-view class="mt-90"></router-view>
-    <Footer v-if="$route.name !=='lottery'" />
-    <div class="lineLink pos-fixed mr-20 mb-150" v-if="$route.name !=='lottery'">
-      <a href="http://line.me/ti/g/R3Rrwe8sqb" target="_blank">
-        <img src="@/assets/images/line.png" alt="" width="70px" />
-      </a>
+    <Footer v-if="$route.name !== 'lottery'" />
+    <div
+      class="lineLink pos-fixed mr-20 mb-150"
+      v-if="$route.name !== 'lottery'"
+      @click="openLineGroup"
+    >
+      <img src="@/assets/images/line.png" alt="" width="70px" />
     </div>
   </div>
 </template>
@@ -20,6 +22,11 @@ export default {
   components: {
     Header,
     Footer,
+  },
+  methods: {
+    openLineGroup() {
+      window.open("http://line.me/ti/g/R3Rrwe8sqb");
+    },
   },
 };
 </script>
