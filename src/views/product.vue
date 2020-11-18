@@ -190,7 +190,7 @@ export default {
           bannerPath:
             "https://sn.bpnavi.jp/1kuji_kimetsu/kimetsu4/images/main.jpg",
           titleName: "一番くじ 鬼滅の刃 ～無限列車編～",
-          leftTickets: "65張",
+          leftTickets: "59張",
           price_one: "NT$480",
           price_five: "NT$2300",
           videoPath: "https://www.youtube.com/embed/NJT6NpKL9S4",

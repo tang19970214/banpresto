@@ -344,7 +344,6 @@
           >
         </span>
       </el-dialog>
-
       <el-dialog title="提示" :visible.sync="removeAlert" width="70%">
         <span>確定要刪除嗎？</span>
         <span slot="footer" class="dialog-footer">
@@ -757,7 +756,7 @@ export default {
       // 如果正在執行中不動作
       if (this.isRunning) return;
       // 取得隨機角度(預設至少跑10圈)
-      const randomDeg = Math.floor(Math.random() * (360 - 0)) + 3600;
+      const randomDeg = Math.floor(Math.random() * (360 - 0)) + 4800;
       // 取得隨機回彈角度
       const randomRollBackDeg = Math.random() * this.config.rollBackRange + 1;
       // 設定回彈角度
